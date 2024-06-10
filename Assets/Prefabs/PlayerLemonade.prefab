@@ -256,12 +256,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rb: {fileID: 4522223166966867172}
   playerCollider: {fileID: 4658801278525138202}
-  moveSpeed: 20
-  jumpForce: 24
+  moveSpeed: 25
+  jumpForce: 25
   facingRight: 0
   groundMask:
     serializedVersion: 2
-    m_Bits: 328
+    m_Bits: 72
   jump: {fileID: 3374476724491861508}
   walk: {fileID: 2460232047395339301}
 --- !u!114 &5611008981049830116
@@ -278,7 +278,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 5981540262812143262, guid: 4230adae8bf5844429babb83e915b9a5, type: 3}
   spawn: {fileID: 4534124477722864847}
-  attackSpeed: 0.8
+  attackDelay: 0.6
   cooldownImage: {fileID: 4019584937623184996}
   shoot: {fileID: 2723612526976110945}
 --- !u!114 &3800424269509820107

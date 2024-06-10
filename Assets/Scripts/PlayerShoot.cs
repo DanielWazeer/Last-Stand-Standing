@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,7 +7,7 @@ public class PlayerShoot : MonoBehaviour
     public GameObject bullet;
     public GameObject spawn;
     private float nextAttackTime;
-    public float attackSpeed;
+    public float attackDelay;
     private PlayerController playerController;
     public static bool CanMove;
     public Image cooldownImage; // Assign this in the Inspector
@@ -32,7 +29,7 @@ public class PlayerShoot : MonoBehaviour
             if (Input.GetKey(KeyCode.X))
             {
                 Shooting();
-                nextAttackTime = Time.time + attackSpeed;
+                nextAttackTime = Time.time + attackDelay;
                 UnityEngine.Debug.Log(nextAttackTime);
             }
         }
@@ -97,13 +94,13 @@ public class PlayerShoot : MonoBehaviour
     }
     public void StartCooldown()
     {
-        cooldownTimer = attackSpeed;
+        cooldownTimer = attackDelay;
         UpdateCooldownUI();
     }
 
     private void UpdateCooldownUI()
     {
-        float fillAmount = Mathf.Clamp01(cooldownTimer / attackSpeed);
+        float fillAmount = Mathf.Clamp01(cooldownTimer / attackDelay);
         cooldownImage.fillAmount = fillAmount;
     }
 
