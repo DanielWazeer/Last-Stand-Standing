@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu.unity
+    guid: 6bbe99ce3750b2041aef4d6027144fa3
+  - enabled: 1
+    path: Assets/Scenes/Lvl_Lemonade.unity
+    guid: 4c57925d2adccd347bd92ab3adcdb49b
+  - enabled: 1
+    path: Assets/Scenes/Lvl_Burger.unity
+    guid: fda38e58dfd1cba40b6bb847be4f5f7f
+  - enabled: 1
+    path: Assets/Scenes/Lvl_Candy.unity
+    guid: 03cb0d10e8d97884fafd7d76458add9d
+  - enabled: 1
+    path: Assets/Scenes/Lvl_Night.unity
+    guid: adf3ce08f9edaa94aa75c3e35f7ccb94
+  m_configObjects: {}
