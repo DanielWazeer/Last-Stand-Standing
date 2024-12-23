@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -185}
+  m_AnchoredPosition: {x: -20, y: -185}
   m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6789762441168311536
@@ -80,11 +80,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 8930388115823345908}
   m_HandleRect: {fileID: 0}
-  m_Direction: 0
+  m_Direction: 1
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 280
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 280
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -236,7 +236,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 30
+  m_Mass: 35
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 10
@@ -265,16 +265,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 534749729279199168, guid: 2d744ba4b0f3f904796049c339c68306, type: 3}
   spawn: {fileID: 5022241001380391582}
-  attackSpeed: 1.5
-  speed: 20
-  jumpPower: 25
+  enfacingRight: 1
+  speed: 15
+  jumpPower: 24
+  dashCan: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  idleTime: 1
+  idleTime: 0.1
   walkTime: 0.2
   jumpTime: 0.3
-  attack1Time: 3
+  attack1Time: 1
+  isDashing: 0
+  dashPower: -90
+  dashDelay: 1.4
   enemyState: 0
 --- !u!114 &3934417957023420299
 MonoBehaviour:
@@ -290,9 +294,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Panel: {fileID: 0}
   resultTMP: {fileID: 0}
-  maxValue: 100
-  currentValue: 100
+  maxValue: 280
+  currentValue: 280
   healthSlider: {fileID: 2823514480597168176}
+  night: 0
+  hasCam: 0
   hurt: {fileID: 1636492482964822196}
 --- !u!95 &8751117651255107381
 Animator:
@@ -328,7 +334,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: ace51e9fb4f5f704794cd3317b896b4b, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.7
-  m_Pitch: 1.7
+  m_Pitch: 1.6
   Loop: 0
   Mute: 0
   Spatialize: 0

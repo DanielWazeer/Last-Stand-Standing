@@ -18,9 +18,9 @@ public class HealthMeter : MonoBehaviour
     public static int lives;
     public bool hasCam;
     public AudioSource hurt;
-
+    private int hitMult;
     private Animator anim;
-
+    private Rigidbody2D rb;
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -31,6 +31,11 @@ public class HealthMeter : MonoBehaviour
         currentValue = maxValue;
         slider = healthSlider.GetComponent<Slider>();
         lives = 3;
+        hitMult = 1;
+        if(myName == "Player")
+        {
+            rb = GetComponent<Rigidbody2D>();
+        }
     }
 
     public void TakeDamage(float damage)
@@ -42,7 +47,16 @@ public class HealthMeter : MonoBehaviour
         if(myName == "Player")
         {
             PlayerShoot.CanMove = false;
-            AllowMovement();
+            hitMult += 5;
+            if(PlayerController.facingRight)
+                rb.velocity = (Vector2.left + Vector2.up/2) * hitMult;
+            else
+                rb.velocity = (Vector2.right + Vector2.up/2) * hitMult;
+            Invoke("AllowMovement", 0.1f + hitMult * 0.002f);
+        }
+        else if(myName == "Enemy")
+        {
+            GetComponent<EnemyBehavior>().StartCoroutine("IsHit");
         }
     }
     public void AllowMovement()
@@ -87,6 +101,25 @@ public class HealthMeter : MonoBehaviour
                     Destroy(gameObject);
                 }   
             }
+        }
+        else if(myName == "Player" && collision.gameObject.tag == "Lose")
+        {
+            Panel.SetActive(true);
+            result = "You Lose!";
+            resultTMP.text = result;
+            Time.timeScale = 0f;
+        }
+        else if (myName == "Enemy" && collision.gameObject.tag == "Lose")
+        {
+            PlayerController.unDefeated = Utility.FindGameObjectsInLayer(6).Length;
+            if (PlayerController.unDefeated <= 1)
+            {
+                Panel.SetActive(true);
+                result = "You are the LAST STAND STANDING!";
+                resultTMP.text = result;
+                Time.timeScale = 0f;
+            }
+            Destroy(gameObject);
         }
     }
 }

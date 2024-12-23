@@ -1,5 +1,7 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EnemyBehavior : MonoBehaviour
 {
@@ -13,14 +15,15 @@ public class EnemyBehavior : MonoBehaviour
     #region Behavior Variables
     public GameObject bullet;
     public GameObject spawn;
-    public float attackSpeed;
     private float nextAttackTime;
     private float nextJumpTime;
-    private bool facingRight = true;
+    public bool enfacingRight = true;
     public float speed;
     private int move;
     public float jumpPower;
-    private bool canMove = true;
+    private bool enemyMove = true;
+    private int hitMult;
+    public bool dashCan;
     [SerializeField] private LayerMask groundMask;
     #endregion
 
@@ -33,7 +36,17 @@ public class EnemyBehavior : MonoBehaviour
     #endregion
 
     private Animator anim;
+    public static bool upBullet;
+    public static bool downBullet;
 
+
+    [Header("Dash")]
+    private bool canDash = true;
+    public bool isDashing;
+    public float dashPower;
+    private float dashTime = 0.1f;
+    private float nextDashTime;
+    public float dashDelay;
     private void Start()
     {
         anim = GetComponent<Animator>();
@@ -44,26 +57,34 @@ public class EnemyBehavior : MonoBehaviour
         nextJumpTime = 0f;
         enemyState = EnemyState.Idle;
         StartCoroutine(ChangeState());
+        enfacingRight = true;
+        hitMult = 1;
     }
     public enum EnemyState
     {
         Idle,
         Walk,
         Jump,
-        Attack1
+        Dash,
+        Attack1,
+        Attack2,
+        Attack3
     }
     public EnemyState enemyState;
 
     IEnumerator ChangeState()
     {
-        yield return new WaitForSeconds(0.1f);
-        enemyState = (EnemyState)Random.Range(0, 4);
+        yield return new WaitForSeconds(0.2f);
+        enemyState = (EnemyState)Random.Range(0, 7);
         yield return new WaitForSeconds(stateTime);
         StartCoroutine(ChangeState());
     }
     void Update()
     {
-        HandleGravity();
+        if (isDashing)
+        {
+            return;
+        }
         Flip();
         if(rb.velocity.x != 0f)
         {
@@ -73,59 +94,183 @@ public class EnemyBehavior : MonoBehaviour
         {
             anim.SetBool("Walk", false);
         }
-        switch (enemyState)
+        if(enemyMove && (transform.position.x < 24 && transform.position.x > -24))
         {
-            case EnemyState.Idle:
-                if (!inAction)
-                {
-                    move = 0;
-                    stateTime = idleTime;
-                }
-                break;
-            case EnemyState.Walk:
-                if (!inAction)
-                {
-                    if (canMove)
-                        Move();
-                    else move = 0;
-                    stateTime = walkTime;
-                }
-                break;
-            case EnemyState.Jump:
-                if (!inAction)
-                {
-                    if (Time.time >= nextJumpTime)
+            HandleGravity();
+            switch (enemyState)
+            {
+                case EnemyState.Idle:
+                    if (!inAction)
                     {
-                        if (isGrounded() && canMove)
+                        move = 0;
+                        stateTime = idleTime;
+                    }
+                    break;
+                case EnemyState.Walk:
+                    if (!inAction)
+                    {
+                        if (enemyMove)
+                            Move();
+                        else move = 0;
+                        stateTime = walkTime;
+                    }
+                    break;
+                case EnemyState.Jump:
+                    if (!inAction)
+                    {
+                        if (Time.time >= nextJumpTime)
                         {
-                            rb.velocity = Vector2.up * jumpPower;
-                            nextJumpTime = Time.time + 1f;
-                            stateTime = jumpTime;
+                            if (isGrounded() && enemyMove)
+                            {
+                                rb.velocity = Vector2.up * jumpPower;
+                                nextJumpTime = Time.time + 1f;
+                                stateTime = jumpTime;
+                            }
                         }
                     }
-                }
-                break;
-            case EnemyState.Attack1:
-                if (!inAction)
-                {
-                    if (Time.time >= nextAttackTime)
+                    break;
+                case EnemyState.Attack1:
+                    if (!inAction)
                     {
-                        StartCoroutine(Attack1());
+                        if (Time.time >= nextAttackTime)
+                        {
+                            StartCoroutine(Attack1());
+                        }
                     }
+                    break;
+                case EnemyState.Attack2:
+                    if (!inAction && transform.position.y < (player.transform.position.y))
+                    {
+                        if (Time.time >= nextAttackTime)
+                        {
+                            StartCoroutine(Attack2());
+                        }
+                    }
+                    break;
+                case EnemyState.Attack3:
+                    if (!inAction && transform.position.y > (player.transform.position.y + 0.5f))
+                    {
+                        if (Time.time >= nextAttackTime)
+                        {
+                            StartCoroutine(Attack3());
+                        }
+                    }
+                    break;
+                case EnemyState.Dash:
+                    if (!inAction && dashCan)
+                    {
+                        if (canDash && Time.time >= nextDashTime)
+                        {
+                            StartCoroutine(Dash());
+                            nextDashTime = Time.time + dashDelay;
+                        }
+                    }
+                    break;
+            }
+        }
+        else if(enemyMove)
+        {
+            if((transform.position.x > 24f && !enfacingRight) || (transform.position.x < -24f && enfacingRight))
+            {
+                enemyState = (EnemyState)Random.Range(1, 3);
+                switch (enemyState)
+                {
+                    case EnemyState.Walk:
+                        if (!inAction)
+                        {
+                            if (enemyMove)
+                                Move();
+                            else move = 0;
+                            stateTime = walkTime;
+                        }
+                        break;
+                    case EnemyState.Jump:
+                        if (!inAction)
+                        {
+                            if (Time.time >= nextJumpTime)
+                            {
+                                if (isGrounded() && enemyMove)
+                                {
+                                    rb.velocity = Vector2.up * jumpPower;
+                                    nextJumpTime = Time.time + 1f;
+                                    stateTime = jumpTime;
+                                }
+                            }
+                        }
+                        break;
+                    case EnemyState.Dash:
+                        if (!inAction && dashCan)
+                        {
+                            if (canDash && Time.time >= nextDashTime)
+                            {
+                                StartCoroutine(Dash());
+                                nextDashTime = Time.time + dashDelay;
+                            }
+                        }
+                        break;
                 }
-                break;
+            }
         }
     }
     IEnumerator Attack1()
     {
+        upBullet = false;
+        downBullet = false;
         Shooting();
         inAction = true;
         stateTime = attack1Time;
-        canMove = false;
+        enemyMove = false;
         nextAttackTime = Time.time + stateTime;
         move = 0;
         yield return new WaitForSeconds(stateTime);
-        canMove = true;
+        enemyMove = true;
+        inAction = false;
+    }
+    private IEnumerator Dash()
+    {
+        canDash = false;
+        isDashing = true;
+        float originalGravity = rb.gravityScale;
+        rb.gravityScale = 0f;
+        rb.velocity = new Vector2(transform.localScale.x * dashPower, 0f);
+        rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
+        inAction = true;
+        enemyMove = false;
+        move = 0;
+        yield return new WaitForSeconds(dashTime);
+        rb.gravityScale = originalGravity;
+        isDashing = false;
+        canDash = true;
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        enemyMove = true;
+        inAction = false;
+    }
+    IEnumerator Attack2()
+    {
+        upBullet = true;
+        downBullet = false;
+        Shooting();
+        inAction = true;
+        stateTime = attack1Time;
+        enemyMove = false;
+        nextAttackTime = Time.time + stateTime;
+        move = 0;
+        yield return new WaitForSeconds(stateTime);
+        enemyMove = true;
+        inAction = false;
+    }
+    IEnumerator Attack3()
+    {
+        upBullet = false;
+        downBullet = true;
+        Shooting();
+        inAction = true;
+        stateTime = attack1Time;
+        enemyMove = false;
+        nextAttackTime = Time.time + stateTime;
+        move = 0;
+        yield return new WaitForSeconds(stateTime);
+        enemyMove = true;
         inAction = false;
     }
 
@@ -146,7 +291,7 @@ public class EnemyBehavior : MonoBehaviour
     {
         if (rb.velocity.y < 1f)
             rb.gravityScale = 10f;
-        else rb.gravityScale = 4f;
+        else rb.gravityScale = 5f;
 
         if (rb.velocity.y > 0.1f)
         {
@@ -168,24 +313,34 @@ public class EnemyBehavior : MonoBehaviour
     }
     void FixedUpdate()
     {
-        rb.velocity = new Vector2((move * speed), rb.velocity.y);
+        if (isDashing)
+        {
+            return;
+        }
+        else if(enemyMove)
+            rb.velocity = new Vector2((move * speed), rb.velocity.y);
     }
     public IEnumerator IsHit()
     {
         inAction = true;
         enemyState = EnemyState.Idle;
-        canMove = false;
+        enemyMove = false;
         move = 0;
-        yield return new WaitForSeconds(0.1f);
-        canMove = true;
+        hitMult += 5;
+        if(enfacingRight)
+            rb.velocity = (Vector2.left + Vector2.up/2) * hitMult;
+        else
+            rb.velocity = (Vector2.right + Vector2.up / 2) * hitMult;
+        yield return new WaitForSeconds(0.1f + hitMult * 0.001f);
+        enemyMove = true;
         inAction = false;
     }
     void Flip()
     {
-        if (facingRight && player.transform.position.x < transform.position.x - 1 || !facingRight && player.transform.position.x > transform.position.x + 1)
+        if (enfacingRight && player.transform.position.x < transform.position.x - 4 || !enfacingRight && player.transform.position.x > transform.position.x + 4)
         {
             Vector3 localScale = transform.localScale;
-            facingRight = !facingRight;
+            enfacingRight = !enfacingRight;
             localScale.x *= -1f;
             transform.localScale = localScale;
         }
@@ -200,44 +355,94 @@ public class EnemyBehavior : MonoBehaviour
     {
         anim.SetTrigger("Throw");
         GameObject projectile = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-        if (facingRight)
+        if (enfacingRight)
         {
             if (transform.tag == "EnemyBurger")
             {
                 projectile.transform.right = transform.right;
                 GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile2.transform.right = transform.right + transform.up / 4f;
+                projectile2.transform.right = transform.right + transform.up / 3f;
                 GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile3.transform.right = transform.right - transform.up / 4f;
+                projectile3.transform.right = transform.right - transform.up / 3f;
             }
             else if (transform.tag == "EnemyCandy")
             {
-                projectile.transform.right = transform.up;
-                GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile2.transform.right = transform.right / 3 + transform.up;
+                if (enemyState == EnemyState.Attack2)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right - transform.up / 6;
+                }
+                else if (enemyState == EnemyState.Attack3)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up / 6;
+                }
+                else
+                {
+                    projectile.transform.right = transform.up + transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.up / 2 + transform.right;
+                }
             }
             else
+            {
                 projectile.transform.right = transform.right;
+            }
         }
-        else
+        else //facing left
         {
             if (transform.tag == "EnemyBurger")
             {
                 projectile.transform.right = -transform.right;
-                GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile2.transform.right = -transform.right + transform.up / 4f;
-                GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile3.transform.right = -transform.right - transform.up / 4f;
+                if (enemyState == EnemyState.Attack2)
+                {
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up / 3f;
+                    GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile3.transform.right = transform.right - transform.up / 3f;
+                }
+                else if (enemyState == EnemyState.Attack3)
+                {
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up / 3f;
+                    GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile3.transform.right = transform.right - transform.up / 3f;
+                }
+                else //not holding
+                {
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = -transform.right + transform.up / 3f;
+                    GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile3.transform.right = -transform.right - transform.up / 3f;
+                }
             }
             else if (transform.tag == "EnemyCandy")
             {
-                projectile.transform.right = transform.up;
-                GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile2.transform.right = -transform.right / 3 + transform.up;
+                if (enemyState == EnemyState.Attack2)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up / 6;
+                }
+                else if (enemyState == EnemyState.Attack3)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right - transform.up / 6;
+                }
+                else
+                {
+                    projectile.transform.right = transform.up - transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.up / 2 - transform.right;
+                }
             }
             else
+            {
                 projectile.transform.right = -transform.right;
+            }
         }
-
     }
 }

@@ -109,7 +109,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -185}
+  m_AnchoredPosition: {x: -20, y: -185}
   m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6251238360959521292
@@ -155,11 +155,11 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 8232660533671783573}
   m_HandleRect: {fileID: 0}
-  m_Direction: 0
+  m_Direction: 1
   m_MinValue: 0
-  m_MaxValue: 100
+  m_MaxValue: 300
   m_WholeNumbers: 1
-  m_Value: 100
+  m_Value: 300
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -263,7 +263,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 4760541765088886192}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: deab5382a3b9416428e1dca6c595d59f, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -297,7 +297,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.4, y: 4.6}
+  m_Size: {x: 3.2, y: 4.4}
   m_EdgeRadius: 0
 --- !u!50 &4054466903213457412
 Rigidbody2D:
@@ -340,16 +340,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bullet: {fileID: 4230165289878515033, guid: 75c76203265896a49aff0d6db73bc30f, type: 3}
   spawn: {fileID: 4760541765088886192}
-  attackSpeed: 1.1
-  speed: 17
-  jumpPower: 24
+  enfacingRight: 1
+  speed: 25
+  jumpPower: 30
+  dashCan: 1
   groundMask:
     serializedVersion: 2
     m_Bits: 8
-  idleTime: 3
-  walkTime: 1.8
+  idleTime: 0.1
+  walkTime: 0.2
   jumpTime: 0.3
   attack1Time: 1
+  isDashing: 0
+  dashPower: -100
+  dashDelay: 1.2
   enemyState: 0
 --- !u!114 &153162791495948575
 MonoBehaviour:
@@ -365,9 +369,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Panel: {fileID: 0}
   resultTMP: {fileID: 0}
-  maxValue: 100
-  currentValue: 100
+  maxValue: 300
+  currentValue: 300
   healthSlider: {fileID: 3430862031958979667}
+  night: 0
+  hasCam: 0
   hurt: {fileID: 8817206270081665954}
 --- !u!95 &1927790575379006812
 Animator:

@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Balloon : MonoBehaviour
@@ -26,6 +24,6 @@ public class Balloon : MonoBehaviour
         if(gameObject.tag == "Ground")
             Destroy(gameObject);
         else
-            transform. position = new Vector2 (UnityEngine.Random.Range(-35, 35), UnityEngine.Random.Range(-20, -25));
+            transform. position = new Vector2 (UnityEngine.Random.Range(-40, 40), UnityEngine.Random.Range(-30, -35));
     }
 }

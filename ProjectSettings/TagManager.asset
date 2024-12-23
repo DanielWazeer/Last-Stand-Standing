@@ -13,6 +13,7 @@ TagManager:
   - EnemyCandy
   - EnemyLemonade
   - BalTrig
+  - Lose
   layers:
   - Default
   - TransparentFX

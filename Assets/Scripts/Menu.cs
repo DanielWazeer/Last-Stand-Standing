@@ -10,6 +10,7 @@ public class Menu : MonoBehaviour
     public TMP_Text howtext;
     void Start()
     {
+        Time.timeScale = 1f;
         panel.SetActive(false);
         text.text = "Show Credits";
         how.SetActive(false);
@@ -29,6 +30,10 @@ public class Menu : MonoBehaviour
         SceneManager.LoadScene(3);
     }
     public void LoadNight()
+    {
+        SceneManager.LoadScene(5);
+    }
+    public void LoadBalance()
     {
         SceneManager.LoadScene(4);
     }

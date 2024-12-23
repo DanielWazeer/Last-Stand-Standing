@@ -131,18 +131,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.b
-      value: 0.25882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2784314
-      objectReference: {fileID: 0}
     - target: {fileID: 2145707328420234068, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -22
@@ -216,18 +204,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.b
-      value: 0.25882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2784314
-      objectReference: {fileID: 0}
     - target: {fileID: 2145707328420234068, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -39
@@ -527,18 +503,6 @@ PrefabInstance:
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.b
-      value: 0.25882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2784314
-      objectReference: {fileID: 0}
     - target: {fileID: 3688632854758555311, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
       propertyPath: m_LocalPosition.x
       value: -17
@@ -612,18 +576,6 @@ PrefabInstance:
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.b
-      value: 0.25882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2784314
-      objectReference: {fileID: 0}
     - target: {fileID: 3688632854758555311, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
       propertyPath: m_LocalPosition.x
       value: -34
@@ -1668,18 +1620,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.b
-      value: 0.2555366
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1098846679082975896, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2754717
-      objectReference: {fileID: 0}
     - target: {fileID: 2145707328420234068, guid: 2c897bae2e41e2b4d9f6c0ec75fb3d2f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -24
@@ -1802,25 +1742,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 288574523455567194, guid: ac57a0dd32627e248aa18b372919a088, type: 3}
-      propertyPath: maxValue
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 288574523455567194, guid: ac57a0dd32627e248aa18b372919a088, type: 3}
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 288574523455567194, guid: ac57a0dd32627e248aa18b372919a088, type: 3}
-      propertyPath: currentValue
-      value: 200
-      objectReference: {fileID: 0}
-    - target: {fileID: 2000478018320206416, guid: ac57a0dd32627e248aa18b372919a088, type: 3}
-      propertyPath: m_Value
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2000478018320206416, guid: ac57a0dd32627e248aa18b372919a088, type: 3}
-      propertyPath: m_MaxValue
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 6482119963760736807, guid: ac57a0dd32627e248aa18b372919a088, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -3244,18 +3168,6 @@ PrefabInstance:
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.b
-      value: 0.25882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2784314
-      objectReference: {fileID: 0}
     - target: {fileID: 8543317727265469045, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
       propertyPath: m_Name
       value: EnemyBurger
@@ -3329,18 +3241,6 @@ PrefabInstance:
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.b
-      value: 0.25882354
-      objectReference: {fileID: 0}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2784314
-      objectReference: {fileID: 0}
     - target: {fileID: 8543317727265469045, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
       propertyPath: m_Name
       value: EnemyBurger (2)
@@ -4296,18 +4196,6 @@ PrefabInstance:
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.b
-      value: 0.2555366
-      objectReference: {fileID: 0}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 207030570724744675, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2754717
-      objectReference: {fileID: 0}
     - target: {fileID: 3688632854758555311, guid: b9f42012a6db8a84aabca233440e9242, type: 3}
       propertyPath: m_LocalPosition.x
       value: -19
@@ -4727,18 +4615,6 @@ PrefabInstance:
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.b
-      value: 0.2555366
-      objectReference: {fileID: 0}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7925257413284748144, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
-      propertyPath: m_Color.r
-      value: 0.2754717
-      objectReference: {fileID: 0}
     - target: {fileID: 8543317727265469045, guid: d359d6242967ee14bb04eeb94982c2c4, type: 3}
       propertyPath: m_Name
       value: EnemyBurger (1)
@@ -5992,17 +5868,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5316044345776091372, guid: 2c0e0e3f6cc6f4246b89e12f4ef0c072, type: 3}
-      propertyPath: maxValue
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 5316044345776091372, guid: 2c0e0e3f6cc6f4246b89e12f4ef0c072, type: 3}
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 5316044345776091372, guid: 2c0e0e3f6cc6f4246b89e12f4ef0c072, type: 3}
-      propertyPath: currentValue
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 5343540440704210939, guid: 2c0e0e3f6cc6f4246b89e12f4ef0c072, type: 3}
       propertyPath: m_Name
       value: PlayerCandy
@@ -6014,14 +5882,6 @@ PrefabInstance:
     - target: {fileID: 8190895339126522351, guid: 2c0e0e3f6cc6f4246b89e12f4ef0c072, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8760135140169400802, guid: 2c0e0e3f6cc6f4246b89e12f4ef0c072, type: 3}
-      propertyPath: m_Value
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 8760135140169400802, guid: 2c0e0e3f6cc6f4246b89e12f4ef0c072, type: 3}
-      propertyPath: m_MaxValue
-      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6277,17 +6137,9 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3800424269509820107, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
-      propertyPath: maxValue
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 3800424269509820107, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
       propertyPath: resultTMP
       value: 
       objectReference: {fileID: 1609376209}
-    - target: {fileID: 3800424269509820107, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
-      propertyPath: currentValue
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 4360655187064239388, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -6299,14 +6151,6 @@ PrefabInstance:
     - target: {fileID: 4534124477722864847, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
       propertyPath: m_Name
       value: PlayerLemonade
-      objectReference: {fileID: 0}
-    - target: {fileID: 7153928550733237118, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
-      propertyPath: m_Value
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 7153928550733237118, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
-      propertyPath: m_MaxValue
-      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 8380417814358428155, guid: a324a0866651bbc4b84a38560b97dea3, type: 3}
       propertyPath: m_LocalPosition.x

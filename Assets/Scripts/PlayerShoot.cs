@@ -1,27 +1,29 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class PlayerShoot : MonoBehaviour
 {
     public GameObject bullet;
     public GameObject spawn;
     private float nextAttackTime;
     public float attackDelay;
-    private PlayerController playerController;
     public static bool CanMove;
-    public Image cooldownImage; // Assign this in the Inspector
+    public Image cooldownImage;
     public AudioSource shoot;
     private float cooldownTimer;
     private Animator anim;
 
+    private bool isHoldingUp = false;
+    private bool isHoldingDown = false;
+
     private void Start()
     {
-        playerController = GetComponent<PlayerController>();
         nextAttackTime = 0f;
         anim = GetComponent<Animator>();
         CanMove = true;
+        cooldownImage.fillAmount = 1; // Start with the cooldown filled
     }
+
     private void Update()
     {
         if (Time.time >= nextAttackTime)
@@ -30,15 +32,31 @@ public class PlayerShoot : MonoBehaviour
             {
                 Shooting();
                 nextAttackTime = Time.time + attackDelay;
-                UnityEngine.Debug.Log(nextAttackTime);
             }
         }
-        if (cooldownTimer > 0)
+        if (cooldownTimer < attackDelay)
         {
-            cooldownTimer -= Time.deltaTime;
+            cooldownTimer += Time.deltaTime;
             UpdateCooldownUI();
         }
+        if(Input.GetKey(KeyCode.UpArrow))
+        {
+            isHoldingUp = true;
+            isHoldingDown = false;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            isHoldingDown = true;
+            isHoldingUp = false;
+        }
+        else
+        {
+            isHoldingUp = false;
+            isHoldingDown = false;
+        }
+
     }
+
     public void AllowMovement()
     {
         CanMove = true;
@@ -48,12 +66,11 @@ public class PlayerShoot : MonoBehaviour
     {
         shoot.Play();
         StartCooldown();
-        CanMove = false;
         anim.SetTrigger("Throw");
         GameObject projectile = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-        if(playerController.facingRight)
+        if (PlayerController.facingRight)
         {
-            if(transform.tag == "PlayerBurger")
+            if (transform.tag == "PlayerBurger")
             {
                 projectile.transform.right = transform.right;
                 GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
@@ -63,38 +80,88 @@ public class PlayerShoot : MonoBehaviour
             }
             else if (transform.tag == "PlayerCandy")
             {
-                projectile.transform.right = transform.up;
-                GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile2.transform.right = transform.right/2 + transform.up;
+                if(isHoldingUp)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right - transform.up/6;
+                }
+                else if(isHoldingDown)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up/6;
+                }
+                else
+                {
+                    projectile.transform.right = transform.up + transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.up/2 + transform.right ;
+                }
             }
             else
+            {
                 projectile.transform.right = transform.right;
+            }
         }
-        else
+        else //facing left
         {
             if (transform.tag == "PlayerBurger")
             {
                 projectile.transform.right = -transform.right;
-                GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile2.transform.right = -transform.right + transform.up / 3f;
-                GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile3.transform.right = -transform.right - transform.up / 3f;
+                if (isHoldingUp)
+                {
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up / 3f;
+                    GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile3.transform.right = transform.right - transform.up / 3f;
+                }
+                else if (isHoldingDown)
+                {
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up / 3f;
+                    GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile3.transform.right = transform.right - transform.up / 3f;
+                }
+                else //not holding
+                {
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = -transform.right + transform.up / 3f;
+                    GameObject projectile3 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile3.transform.right = -transform.right - transform.up / 3f;
+                }
             }
             else if (transform.tag == "PlayerCandy")
             {
-                projectile.transform.right = transform.up;
-                GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
-                projectile2.transform.right = -transform.right/2 + transform.up;
+                if (isHoldingUp)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right + transform.up/6;
+                }
+                else if (isHoldingDown)
+                {
+                    projectile.transform.right = transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.right - transform.up/6;
+                }
+                else
+                {
+                    projectile.transform.right = transform.up - transform.right;
+                    GameObject projectile2 = (GameObject)Instantiate(bullet, spawn.transform.position, Quaternion.identity);
+                    projectile2.transform.right = transform.up/2 - transform.right;
+                }
             }
             else
+            {
                 projectile.transform.right = -transform.right;
+            }
         }
-        AllowMovement();
-            
     }
+
     public void StartCooldown()
     {
-        cooldownTimer = attackDelay;
+        cooldownTimer = 0;
         UpdateCooldownUI();
     }
 
@@ -106,6 +173,6 @@ public class PlayerShoot : MonoBehaviour
 
     public bool CanAttack()
     {
-        return cooldownTimer <= 0;
+        return cooldownTimer >= attackDelay;
     }
 }

@@ -100,8 +100,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61e00c51997e8a840ad2c7203ced2990, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 19
-  bulletLife: 1
+  bulletSpeed: 25
+  bulletLife: 0.5
   enemyLayer: 0
 --- !u!58 &4872258413995807309
 CircleCollider2D:
