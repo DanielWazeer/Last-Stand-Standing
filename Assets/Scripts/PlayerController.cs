@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     public static int unDefeated;
     public AudioSource jump;
     public AudioSource walk;
-    private Animator anim;
+    [SerializeField] private Animator anim;
     Vector2 vecGravity;
 
     [Header("Jump System")]
@@ -49,7 +49,6 @@ public class PlayerController : MonoBehaviour
     {
         playerCollider = GetComponent<BoxCollider2D>();
         rb = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
         vecGravity = new Vector2(0, -Physics2D.gravity.y);
         nextJumpTime = 0f;
         nextDashTime = 0f;
@@ -90,9 +89,9 @@ public class PlayerController : MonoBehaviour
             coyoteCounter = 0f;
             isJumping = false;
             jumpCounter = 0;
-            if (rb.velocity.y > 0f)
+            if (rb.linearVelocity.y > 0f)
             {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.6f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.6f);
             }
         }
         if (Input.GetKeyDown(KeyCode.C) && canDash && Time.time >= nextDashTime)
@@ -143,7 +142,7 @@ public class PlayerController : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashPower, 0f);
+        rb.linearVelocity = new Vector2(transform.localScale.x * dashPower, 0f);
         rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         yield return new WaitForSeconds(dashTime);
         rb.gravityScale = originalGravity;
@@ -157,19 +156,19 @@ public class PlayerController : MonoBehaviour
     {
         if (isDashing) { return; }
         if(PlayerShoot.CanMove)
-            rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
+            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
     }
 
     void HandleGravity()
     {
-        if (rb.velocity.y < -0.01f)
+        if (rb.linearVelocity.y < -0.01f)
         {
             rb.gravityScale = 12f;
-            rb.velocity -= vecGravity * 6 * Time.deltaTime;
+            rb.linearVelocity -= vecGravity * 6 * Time.deltaTime;
             anim.SetBool("Fall", true);
             anim.SetBool("Jump", false);
         }
-        else if (rb.velocity.y > 0.01f)
+        else if (rb.linearVelocity.y > 0.01f)
         {
             rb.gravityScale = 6f;
             anim.SetBool("Jump", true);
@@ -184,7 +183,7 @@ public class PlayerController : MonoBehaviour
                 {
                     currentJumpM = jumpMult * (1 - t);
                 }
-                rb.velocity += vecGravity * jumpMult * Time.deltaTime;
+                rb.linearVelocity += vecGravity * jumpMult * Time.deltaTime;
             }
         }
         else
@@ -218,19 +217,19 @@ public class PlayerController : MonoBehaviour
         {
             nextJumpTime = Time.time + 0.15f;
             jumpPressedTime = null;
-            rb.velocity = Vector2.up * jumpForce;
+            rb.linearVelocity = Vector2.up * jumpForce;
             jump.Play();
             isJumping = true;
             jumpCounter = 0;
             if (Time.time - jumpReleasedTime <= jumpGracePeriod)
             {
-                rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * 0.6f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, rb.linearVelocity.y * 0.6f);
                 jumpReleasedTime = null;
             }
         }
-        else if (!isGrounded() && Input.GetKeyDown(KeyCode.DownArrow))
+        else if (!isGrounded() && Input.GetKeyDown(KeyCode.C))
         {
-            rb.velocity += -Vector2.up * jumpForce * 2;
+            rb.linearVelocity += -Vector2.up * jumpForce * 2;
             jump.Play();
         }
     }

@@ -19,11 +19,10 @@ public class HealthMeter : MonoBehaviour
     public bool hasCam;
     public AudioSource hurt;
     private int hitMult;
-    private Animator anim;
+    [SerializeField] private Animator anim;
     private Rigidbody2D rb;
     private void Start()
     {
-        anim = GetComponent<Animator>();
         Time.timeScale = 1;
         int myLayer = gameObject.layer;
         myName = LayerMask.LayerToName(myLayer);
@@ -49,9 +48,9 @@ public class HealthMeter : MonoBehaviour
             PlayerShoot.CanMove = false;
             hitMult += 5;
             if(PlayerController.facingRight)
-                rb.velocity = (Vector2.left + Vector2.up/2) * hitMult;
+                rb.linearVelocity = (Vector2.left + Vector2.up/2) * hitMult;
             else
-                rb.velocity = (Vector2.right + Vector2.up/2) * hitMult;
+                rb.linearVelocity = (Vector2.right + Vector2.up/2) * hitMult;
             Invoke("AllowMovement", 0.1f + hitMult * 0.002f);
         }
         else if(myName == "Enemy")
@@ -67,9 +66,10 @@ public class HealthMeter : MonoBehaviour
     {
         int collLayer = collision.gameObject.layer;
         string collName = LayerMask.LayerToName(collLayer);
-        if((collName == "EnemyBullet" && myName == "Player") || (collName == "PlayerBullet" && myName == "Enemy"))
+        if(((collName == "Enemy" || collName == "EnemyBullet") && myName == "Player") || (collName == "PlayerBullet" && myName == "Enemy"))
         {
-            Destroy(collision.gameObject);
+            if(collName != "Enemy")
+                Destroy(collision.gameObject);
             TakeDamage(10);
             hurt.Play();
             if(currentValue <= 0f)

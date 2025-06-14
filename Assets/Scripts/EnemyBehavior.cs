@@ -35,7 +35,7 @@ public class EnemyBehavior : MonoBehaviour
     [SerializeField] private float attack1Time;
     #endregion
 
-    private Animator anim;
+    [SerializeField] private Animator anim;
     public static bool upBullet;
     public static bool downBullet;
 
@@ -49,7 +49,6 @@ public class EnemyBehavior : MonoBehaviour
     public float dashDelay;
     private void Start()
     {
-        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<PlayerController>().gameObject;
         coll = GetComponent<BoxCollider2D>();
@@ -86,7 +85,7 @@ public class EnemyBehavior : MonoBehaviour
             return;
         }
         Flip();
-        if(rb.velocity.x != 0f)
+        if(rb.linearVelocity.x != 0f)
         {
             anim.SetBool("Walk", true); ;
         }
@@ -122,7 +121,7 @@ public class EnemyBehavior : MonoBehaviour
                         {
                             if (isGrounded() && enemyMove)
                             {
-                                rb.velocity = Vector2.up * jumpPower;
+                                rb.linearVelocity = Vector2.up * jumpPower;
                                 nextJumpTime = Time.time + 1f;
                                 stateTime = jumpTime;
                             }
@@ -191,7 +190,7 @@ public class EnemyBehavior : MonoBehaviour
                             {
                                 if (isGrounded() && enemyMove)
                                 {
-                                    rb.velocity = Vector2.up * jumpPower;
+                                    rb.linearVelocity = Vector2.up * jumpPower;
                                     nextJumpTime = Time.time + 1f;
                                     stateTime = jumpTime;
                                 }
@@ -232,7 +231,7 @@ public class EnemyBehavior : MonoBehaviour
         isDashing = true;
         float originalGravity = rb.gravityScale;
         rb.gravityScale = 0f;
-        rb.velocity = new Vector2(transform.localScale.x * dashPower, 0f);
+        rb.linearVelocity = new Vector2(transform.localScale.x * dashPower, 0f);
         rb.constraints = RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         inAction = true;
         enemyMove = false;
@@ -289,17 +288,17 @@ public class EnemyBehavior : MonoBehaviour
     }
     void HandleGravity()
     {
-        if (rb.velocity.y < 1f)
+        if (rb.linearVelocity.y < 1f)
             rb.gravityScale = 10f;
         else rb.gravityScale = 5f;
 
-        if (rb.velocity.y > 0.1f)
+        if (rb.linearVelocity.y > 0.1f)
         {
             anim.SetBool("Jump", true);
             anim.SetBool("Fall", false);
         }
 
-        else if (rb.velocity.y < -0.1f)
+        else if (rb.linearVelocity.y < -0.1f)
         {
             anim.SetBool("Fall", true);
             anim.SetBool("Jump", false);
@@ -318,7 +317,7 @@ public class EnemyBehavior : MonoBehaviour
             return;
         }
         else if(enemyMove)
-            rb.velocity = new Vector2((move * speed), rb.velocity.y);
+            rb.linearVelocity = new Vector2((move * speed), rb.linearVelocity.y);
     }
     public IEnumerator IsHit()
     {
@@ -328,9 +327,9 @@ public class EnemyBehavior : MonoBehaviour
         move = 0;
         hitMult += 5;
         if(enfacingRight)
-            rb.velocity = (Vector2.left + Vector2.up/2) * hitMult;
+            rb.linearVelocity = (Vector2.left + Vector2.up/2) * hitMult;
         else
-            rb.velocity = (Vector2.right + Vector2.up / 2) * hitMult;
+            rb.linearVelocity = (Vector2.right + Vector2.up / 2) * hitMult;
         yield return new WaitForSeconds(0.1f + hitMult * 0.001f);
         enemyMove = true;
         inAction = false;

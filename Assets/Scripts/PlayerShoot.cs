@@ -11,7 +11,7 @@ public class PlayerShoot : MonoBehaviour
     public Image cooldownImage;
     public AudioSource shoot;
     private float cooldownTimer;
-    private Animator anim;
+    [SerializeField] private Animator anim;
 
     private bool isHoldingUp = false;
     private bool isHoldingDown = false;
@@ -19,7 +19,6 @@ public class PlayerShoot : MonoBehaviour
     private void Start()
     {
         nextAttackTime = 0f;
-        anim = GetComponent<Animator>();
         CanMove = true;
         cooldownImage.fillAmount = 1; // Start with the cooldown filled
     }
